@@ -93,14 +93,14 @@ public class MemberHandler implements CommandHandler {
 	    	//회원 정보 확인, DB이메일과 입력값 비교
 	    	MemberDTO member = new MemberDTO();
 	    	
-	    	String mId = req.getParameter("mId");
-	    	String email = req.getParameter("email");
-	    	member = memberService.checkEmail(mId);
+	    	String mId = req.getParameter("mId");		
+	    	String email = req.getParameter("email");	
+	    	member = memberService.checkEmail(mId);		
 	    	
 	    	if(member == null || !member.getEmail().equals(email)) {  	
 	    		req.setAttribute("msg", "회원정보를 찾을 수 없습니다. 아이디와 이메일을 다시 확인해주세요.");
 	    		req.setAttribute("url", "forgetPwd.do");    
-		    	toPath = "WEB-INF/view/alert.jsp";			//오류: 올바른 값 입력해도 alert로 넘어감!!!
+		    	toPath = "WEB-INF/view/alert.jsp";		
 	    	} else {
 	    		
 	    		//메일 서버 설정 (시연할 때 사용할 계정)
@@ -167,20 +167,8 @@ public class MemberHandler implements CommandHandler {
 	    		toPath = "WEB-INF/view/member/changePwd.jsp";
 				}
 	   
-	    }else if(fromPath.equals("/changePwd.do")){//비밀번호 변경
+	    }else if(fromPath.equals("/changePwd.do")){
             
-        	/*String AuthenticationKey = (String) req.getSession().getAttribute("AuthenticationKey");
-			String AuthenticationUser = req.getParameter("AuthenticationUser"); 
-			
-			
-			if (!AuthenticationKey.equals(AuthenticationUser)) {
-				System.out.println("인증코드 일치하지 않음");
-				req.setAttribute("msg", "인증 코드가 일치하지 않습니다.");
-	    		req.setAttribute("url", "changePwd.do");    
-		    	toPath = "WEB-INF/view/alert.jsp";
-			}*/
-			
-			
 			//DB정보 변경 후 alert 뜨고 로그인창으로
 			MemberDTO member = new MemberDTO();
 			String mId = req.getParameter("mId");

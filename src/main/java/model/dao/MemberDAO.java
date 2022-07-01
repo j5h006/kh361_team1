@@ -73,7 +73,7 @@ private static MemberDAO memberDAO = new MemberDAO();
 
 	public boolean checkUniqueId(Connection conn, String inputedId) throws SQLException {
 		
-		ResultSet resultSet;
+		ResultSet resultSet; 
 		PreparedStatement pstmt = null; 
 		
         pstmt = conn.prepareStatement("select * from member where mId=?");        

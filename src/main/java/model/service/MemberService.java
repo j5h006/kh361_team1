@@ -76,10 +76,11 @@ public class MemberService {
 		Connection conn = null;
 
 		try {
+			
             conn = ConnectionProvider.getConnection();
             MemberDAO memberDAO = MemberDAO.getInstance();
             
-            memberDAO.checkEmail(conn, mId);
+            return memberDAO.checkEmail(conn, mId);
             
         } catch (SQLException e) {
             JdbcUtil.printSQLException(e);
