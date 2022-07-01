@@ -1,0 +1,69 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.sql.DriverManager"%>
+<%@ page import="java.sql.Connection"%>
+<%@ page import="java.sql.PreparedStatement"%>
+<%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.sql.SQLException"%>
+
+<% 
+        String driver = "oracle.jdbc.driver.OracleDriver";
+        String url = "jdbc:oracle:thin:@localhost:1521:XE";
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        
+        ResultSet rs = null;
+
+        String typecode, pname, thumbnail; 
+        int price;
+        String sql;
+        
+        try {
+            Class.forName(driver);
+            con = DriverManager.getConnection(url, "MEALKIT", "MEALKIT");
+
+            sql = "SELECT * FROM (SELECT ROWNUM RNUM, PRODUCT.* FROM PRODUCT ORDER BY pId DESC) WHERE RNUM <= 6";
+
+            pstmt = con.prepareStatement(sql);
+            rs = pstmt.executeQuery(); 
+
+                        while (rs.next()) { %>
+<div class="col-md-4">
+	<div class="product-item">
+		<div class="product-thumb">
+			<img class="img-responsive" src="<%=request.getContextPath()%><%=rs.getString("thumbnail")%>"
+				alt="product-img" />
+			<div class="preview-meta">
+				<ul>
+					<li><a href="<%=request.getContextPath()%>/shop/detail.do?pId=<%=rs.getString("pid")%>"><i class="tf-ion-ios-search-strong"></i></a></li>
+					<li><a href="#!"><i class="tf-ion-ios-heart"></i></a></li>
+					<li><a href="#!"><i class="tf-ion-android-cart"></i></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="product-content">
+			<h4>
+				<a href="<%=request.getContextPath()%>/aviato/product-single.html"><%=rs.getString("pname")%></a>
+			</h4>
+			<p class="price"><%=rs.getInt("price")%></p>
+		</div>
+	</div>
+</div>
+<%
+        }
+	} catch (Exception e) {
+		System.out.println("데이터베이스 연결 실패!");
+} finally {
+try {
+	if (rs != null)
+		rs.close();
+	if (pstmt != null)
+		pstmt.close();
+	if (con != null)
+		con.close();
+} catch (Exception e) {
+	System.out.println(e.getMessage());
+}
+}
+            %>
