@@ -80,7 +80,7 @@ function checkvalue(){
 								placeholder="새 비밀번호 확인" required>
 							</div>
 							<div class="text-center">
-								<input type="submit" class="btn btn-main text-center">변경 요청
+								<input type="submit" class="btn btn-main text-center" value="변경 요청">
 							</div>
 						</form>
 					</div>
